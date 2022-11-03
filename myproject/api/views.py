@@ -8,6 +8,6 @@ from .models import Room
 def main(request):
     return HttpResponse("It's")
 
-class RoomView(generics.CreateAPIView):
+class RoomView(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
