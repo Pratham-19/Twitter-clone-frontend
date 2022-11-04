@@ -1,0 +1,32 @@
+.navbar-outer-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nav-items{
+    display: flex;
+    flex-direction: row;
+    margin: 0.7rem 3.5rem;
+    /* justify-content: center; */
+}
+#main-logo{
+    margin: 0.3rem 0;
+}
+.nav-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    /* margin: 0 1rem; */
+}
+.nav-btn{
+    background: #1DA1F2;
+    /* font-weight: 500; */
+    width: 50px;
+    height: 50px;
+    /* justify-content: center; */
+    /* text-align: center; */
+    border-radius: 50%;
+}
+   
