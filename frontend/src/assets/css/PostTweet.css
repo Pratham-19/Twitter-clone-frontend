@@ -1,0 +1,66 @@
+.post-tweet-outer{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* margin: 0.7rem 0; */
+    padding: 0.7rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.308);
+}
+.post-tweet-avatar{
+    flex-basis: 13%;
+    align-items: flex-start;
+}
+.post-tweet-avatar img{
+    /* width: 64px; */
+    width: 53px;
+    /* height: 60px; */
+    margin: 0 auto;
+    margin-right:1.3rem ;
+    border-radius: 50%;
+}
+.post-tweet-input{
+    flex-basis: 87%;
+    display: flex;
+    flex-direction: column;
+}
+.post-tweet-input-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.post-tweet-input-choices{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.post-tweet-input-field{
+    width: 100%;
+}
+.post-tweet-input-field input {
+    width: 90%;
+    height: 3rem;
+    outline: none;
+    border: none;
+    background: #17202A;
+    font-size: 1.3rem;
+    /* margin-bottom: 0.5rem; */
+}
+.post-tweet-input-btn{
+    /* flex-basis: 30%; */
+    background-color: #1DA1F2;
+    color: #fff;
+    border-radius: 22px;
+    margin-right: 1rem;
+    padding: 0.5rem 1.5rem;
+    /* font-weight: 600; */
+}
+.post-tweet-choices{
+    cursor: pointer;
+    margin: 0.5rem 0.2rem;
+}
+.post-tweet-choices:hover{
+    /* cursor: pointer; */
+    transform: translateY(-5px);
+    /* margin: 9.5rem 0.2rem; */
+}

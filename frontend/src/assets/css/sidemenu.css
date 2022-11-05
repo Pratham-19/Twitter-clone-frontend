@@ -1,5 +1,3 @@
-.sidemenu-follow{
-}
 .search-bar{
     background: #283340;
     width: 85%;
@@ -38,13 +36,14 @@
 }   
 #sidemenu-follow-inner{
     width: 100%;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
     font-weight: 550;
     font-size: 1.2rem;
 }
 .people-card-outer{
     display: flex;
     flex-direction: row;
+    padding: 0 0.5rem;
     justify-content: space-between;
     align-items: center;
     margin: 0.5rem 0;
@@ -65,8 +64,8 @@
     /* background-color: #fff; */
 }
 .people-card-img img {
-    height: 60px;
-    width: 70px;
+    /* height: 60px; */
+    width: 50px;
     border-radius: 50%; 
 }
 .people-card-name{
