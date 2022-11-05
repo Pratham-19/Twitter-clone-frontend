@@ -1,7 +1,7 @@
 .sidemenu-follow{
 }
 .search-bar{
-    background: #3A444C;
+    background: #283340;
     width: 85%;
     margin: 1rem auto;
     display: flex;
@@ -15,7 +15,7 @@
     border: 1px solid #1DA1F2;
 } */
 #search-bar{
-    background: #3A444C;
+    background: #283340;
     flex-basis: 85%;
     border: none;
     outline: none;
@@ -41,4 +41,49 @@
     padding: 0.5rem 0;
     font-weight: 550;
     font-size: 1.2rem;
+}
+.people-card-outer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+.people-card-btn{
+    flex-basis: 30%;
+    background-color: #1DA1F2;
+    color: #fff;
+    border-radius: 18px;
+    padding: 0.5rem 0.9rem;
+    /* font-weight: 600; */
+}
+.people-card-img{
+    flex-basis: 20%;
+    /* height: 40px; */
+    /* width: 40px; */
+    /* border-radius: 50%; */
+    /* background-color: #fff; */
+}
+.people-card-img img {
+    height: 60px;
+    width: 70px;
+    border-radius: 50%; 
+}
+.people-card-name{
+    flex-basis: 50%;
+    display: flex;
+    margin-left: 0.5rem;
+    flex-direction: column;
+    justify-content: start;
+
+}
+.people-card-name h2{
+    font-weight: 500; 
+    font-size: 1rem;
+    color: #fff;
+}
+.people-card-name h3{
+    /* font-weight: 500;  */
+    font-size: 0.9rem;
+    color: #8899A6;
 }

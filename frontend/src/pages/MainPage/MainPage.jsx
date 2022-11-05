@@ -14,7 +14,9 @@ const MainPage = () => {
                <h2>Home</h2>
                <BsStars size={'1.3rem'} color={'#1DA1F2'}/> 
             </div>
-            <div className=''></div>
+            <div className='post-tweet'>
+                
+            </div>
         </div>
         <div className='main-bg-inner-3'>
             <SideMenu/>
