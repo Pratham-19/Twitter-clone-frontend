@@ -23,6 +23,7 @@ const MainPage = () => {
             <PostTweet img={m3}/>
             <Tweet avatar={m2} name={'Madza'} tag={'@madzadev'} img={t1}/>
             <Tweet avatar={g1} name={'Namya'} tag={'@marshmallow'} tweet={'Hey, I\'m a tweet'}/>
+            <Tweet avatar={m2} name={'Vinayak'} tag={'@vk'} tweet={'hello world'}/>
         </div>
         <div className='main-bg-inner-3'>
             <SideMenu/>
