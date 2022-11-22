@@ -37,3 +37,9 @@
     /* margin-bottom: 1.3rem; */
     /* line-height: 3px; */
 }
+.no-display{
+    display: none;
+}
+.show-display{
+    display: block;
+}

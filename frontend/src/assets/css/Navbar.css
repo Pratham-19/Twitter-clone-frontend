@@ -21,10 +21,14 @@
     align-items: flex-end;
     /* margin: 0 1rem; */
 }
-.nav-list:hover{
-    /* //elevate  */
-    /* border: 2px solid red; */
-    /* border-radius: 50%; */
+.nav-list-items:hover{
+    transform: translateY(-5px);
+    color: #0096ff;
+    /* background-color: #000; */
+}
+.nav-list-items{
+    /* transform: translateY(-5px); */
+    color: #fff;
     /* background-color: #000; */
 }
 .nav-btn{
