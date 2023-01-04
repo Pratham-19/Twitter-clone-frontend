@@ -14,14 +14,13 @@ npm install
 2.Start react app
 ```
 npm run start
-
 ```
 3. Migrate to backend
 
 ```
 cd backend 
 ```
-4. 
+4. Start backend
 ```
 npm run start
 ```
