@@ -1,196 +1,150 @@
-import React, { useState, useRef } from "react";
-import './random.css'
-import { Link, useNavigate } from "react-router-dom";
-import {useEffect} from "react";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-const  SignUp =() => {
-  const [open, setOpen] = useState(false);
-const [snackMessage,setSnackMessage]=useState("");
-  const [openErr, setOpenErr] = useState(false);
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-    setOpenErr(false);
-  };
-  const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
-    name: "",
-    emailUser: "",
-    password: "",
-    confirmPassword: "",
-  });
-  //handling the input field
-  const handleInput = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    const name = e.target.name;
-    setLoginData({ ...loginData, [name]: value });
-  };
-  //checking the password and confirm password matches or not
-  const checkPassword = () => {
-    if (loginData.password === loginData.confirmPassword) {
-      return true;
-    }
-    return false;
-  };
-  const [checked, setChecked] = useState(false);
-  //submit handler
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    if(checked === false){
-      setSnackMessage("Please Agree to terms and conditions");
-      setOpenErr(true);
-      // alert("Please Agree to terms and conditions");
-    }
-    else if (checkPassword()) {
-      let n=loginData.name;
-      let e=loginData.emailUser;
-      let p=loginData.password;
-      //perform the api call
-            try {
-              const response = await fetch('http://localhost:3001/api/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				n,
-				e,
-				p,
-			}),
-		})
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-		const data = await response.json()
-
-		if (data.status === 'ok') {
-			navigate('/signin')
-		}
-      } catch (error) {
-        // setSnackMessage("Something went wrong");
-        setSnackMessage(error);
-        setOpenErr(true);
+const SignUp = () => {
+  const [username, setUsername] = useState();
+  const [tagname, setTagname] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [errMsg, setErrMsg] = useState("");
+  const [termsAndCondition, setTermsAndCondition] = useState(false);
+  // useEffect(() => {
+  //   if (username && tagname && email && password && confirmPassword) {
+  //     setBtnDisabled(false);
+  //   } else {
+  //     setErrMsg("Please fill all the fields");
+  //     setBtnDisabled(true);
+  //   }
+  // }, [username, tagname, email, password, confirmPassword]);
+  const handleCheckBox = (e) => {
+    if (e.target.checked) {
+      setTermsAndCondition(true);
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      username &&
+      tagname &&
+      email &&
+      password &&
+      confirmPassword &&
+      termsAndCondition
+    ) {
+      if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
+        if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+          if (password === confirmPassword) {
+            console.log("All clear");
+            axios
+              .post("http://localhost:3002/users/signup", {
+                username: username,
+                tagname: tagname,
+                email: email,
+                password: password,
+              })
+              .then((res) => console.log(res))
+              .catch((err) => {
+                if (err.response.status === 409) {
+                  // setErrMsg("Email already exists");
+                  window.alert("Email or Tagname already exists");
+                }
+                console.log(err);
+              });
+          } else {
+            // setErrMsg("Password and Confirm Password do not match");
+            window.alert("Password and Confirm Password do not match");
+          }
+        } else {
+          window.alert(
+            "Password must be 8 characters long and contain at least one letter and one number"
+          );
+        }
+      } else {
+        // setErrMsg("Please enter a valid email");
+        window.alert("Please enter a valid email");
       }
-    } 
-    else {
-      setSnackMessage("Password and confirm password does not match");
-      setOpenErr(true);
-      // alert("Password and confirm password does not match");
+    } else {
+      // setErrMsg("Please fill all the fields");
+      window.alert("Please fill all the fields");
     }
   };
 
-  const checkAgreement = (e) =>
-  {
-    console.log(checkboxRef.current.checked);
-    setChecked(checkboxRef.current.checked);
-  }
-  const checkboxRef = useRef();
   return (
-    <>
-      <div className="form vh-100 d-flex justify-content-center">
-        <div className="form-access my-auto">
-          <form>
-            <div className='heading-main'>Create Account</div>
-            <div className="form-group txt-change">
-              <input
-                type="text"
-                value={loginData.name}
-                name="name"
-                onChange={handleInput}
-                className="form-control"
-                placeholder="Full Name"
-                required
-              />
-            </div>
-            <div className="form-group txt-change">
-              <input
-                type="email"
-                value={loginData.emailUser}
-                name="emailUser"
-                onChange={handleInput}
-                className="form-control"
-                placeholder="Email Address"
-                required
-              />
-            </div>
-            <div className="form-group txt-change">
-              <input
-                type="password"
-                value={loginData.password}
-                onChange={handleInput}
-                name="password"
-                className="form-control"
-                placeholder="Password"
-                required
-              />
-            </div>
-            <div className="form-group txt-change">
-              <input
-                type="password"
-                value={loginData.confirmPassword}
-                onChange={handleInput}
-                name="confirmPassword"
-                className="form-control"
-                placeholder="Confirm Password"
-                required
-              />
-            </div>
-            <div className="custom-control custom-checkbox txt-change">
-              <input
-                type="checkbox"
-                name="checked"
-                className="custom-control-input"
-                onChange={checkAgreement}
-                ref={checkboxRef}
-                value={checked}
-                id="form-checkbox"
-                required
-              />
-              <label className="custom-control-label" htmlFor="form-checkbox">
-                I agree to the{" "}
-                <Link to="/terms-and-conditions" target="_blank">Terms & Conditions</Link>
-              </label>
-            </div>
-            <button
-              type="submit"
-              onClick={submitHandler}
-              className="btn btn-primary"
+    <div className="flex h-[100vh] justify-center ">
+      <form className="flex flex-col min-w-[24vw] m-auto">
+        <h2 className=" text-center text-xl mb-3">Sign Up</h2>
+        <input
+          className="my-2 p-3 rounded-[5px] bg-[rgb(43,43,69)] border-none text-base text-white h-[50px]"
+          type="text"
+          placeholder="Username"
+          onChange={(val) => {
+            setUsername(val.target.value);
+          }}
+        />
+        <input
+          className="my-2 p-3 rounded-[5px] bg-[rgb(43,43,69)] border-none text-base text-white h-[50px]"
+          type="text"
+          placeholder="Tagname"
+          onChange={(val) => {
+            setTagname(val.target.value);
+          }}
+        />
+        <input
+          className="my-2 p-3 rounded-[5px] bg-[rgb(43,43,69)] border-none text-base text-white h-[50px]"
+          type="text"
+          placeholder="Email"
+          onChange={(val) => {
+            setEmail(val.target.value);
+          }}
+        />
+        <input
+          className="my-2 p-3 rounded-[5px] bg-[rgb(43,43,69)] border-none text-base text-white h-[50px]"
+          type="password"
+          placeholder="Password"
+          onChange={(val) => {
+            setPassword(val.target.value);
+          }}
+        />
+        <input
+          className="my-2 p-3 rounded-[5px] bg-[rgb(43,43,69)] border-none text-base text-white h-[50px]"
+          type="password"
+          placeholder="Confirm Password"
+          onChange={(val) => {
+            setConfirmPassword(val.target.value);
+          }}
+        />
+        <div className="my-3">
+          <input
+            type="checkbox"
+            placeholder="I Accept Terms & Conditions"
+            id="form-checkbox"
+            onClick={(e) => {
+              handleCheckBox(e);
+            }}
+          />
+          <label className="text-white ml-3 " htmlFor="form-checkbox">
+            I Accept
+            <Link
+              to="/t&c"
+              className="ml-1 text-[rgb(56,106,255)] underline underline-offset-4"
             >
-              Create Account
-            </button>
-          </form>
-          <h2>
-            Already have an account?
-            <Link to="/signin"> Sign in here</Link>
-          </h2>
+              Terms & Conditions
+            </Link>
+          </label>
         </div>
-      </div>
-      <Snackbar 
-  anchorOrigin={{
-    horizontal: "right",
-    vertical: "top",
-  }}
-  open={open} autoHideDuration={5000} onClose={handleClose} message={'Hi'} >
-            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            {snackMessage}
-            </Alert> 
-          </Snackbar>
-                    <Snackbar 
-  anchorOrigin={{
-    horizontal: "right",
-    vertical: "top",
-  }}
-  open={openErr} autoHideDuration={5000} onClose={handleClose} message={'Hi'} >
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-            {snackMessage}
-            </Alert> 
-          </Snackbar>
-    </>
+        <button
+          className="bg-[rgb(56,106,255)] text-white rounded-[5px] p-[10px] border-none text-lg  mt-4 hover:-translate-y-0.5"
+          onClick={(e) => handleSubmit(e)}
+          // disabled={btnDisabled}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
 export default SignUp;
