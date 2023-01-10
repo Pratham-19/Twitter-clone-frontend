@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [tagname, setTagname] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [btnDisabled, setBtnDisabled] = useState(true);
-  const [errMsg, setErrMsg] = useState("");
+  // const [btnDisabled, setBtnDisabled] = useState(true);
+  // const [errMsg, setErrMsg] = useState("");
   const [termsAndCondition, setTermsAndCondition] = useState(false);
   // useEffect(() => {
   //   if (username && tagname && email && password && confirmPassword) {
@@ -35,9 +36,12 @@ const SignUp = () => {
       termsAndCondition
     ) {
       if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
-        if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+        if (
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+            password
+          )
+        ) {
           if (password === confirmPassword) {
-            console.log("All clear");
             axios
               .post("http://localhost:3002/users/signup", {
                 username: username,
@@ -45,7 +49,11 @@ const SignUp = () => {
                 email: email,
                 password: password,
               })
-              .then((res) => console.log(res))
+              .then((res) => {
+                if (res.data.success === true) {
+                  navigate("/login");
+                }
+              })
               .catch((err) => {
                 if (err.response.status === 409) {
                   // setErrMsg("Email already exists");
@@ -59,7 +67,7 @@ const SignUp = () => {
           }
         } else {
           window.alert(
-            "Password must be 8 characters long and contain at least one letter and one number"
+            "Password must be 8 characters long and contain at least one letter , one special character and one number"
           );
         }
       } else {
@@ -142,6 +150,15 @@ const SignUp = () => {
         >
           Submit
         </button>
+        <h2 className=" text-md my-2 text-[#ffffffe6] ">
+          Already have an account ?{" "}
+          <Link
+            className="text-[rgb(56,106,255)] hover:underline underline-offset-2"
+            to="/login"
+          >
+            Login
+          </Link>
+        </h2>
       </form>
     </div>
   );
